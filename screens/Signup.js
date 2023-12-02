@@ -64,7 +64,7 @@ export const Signup = ({ navigation }) => {
             />
             {/* {errors.password && <Text>{errors.password.message}</Text>} */}
             <Button title="Sign Up" onPress={() => handleSubmit(onSubmit)()} />
-            <Button title="Already a user? Login" onPress={() => handleSubmit(onLogin)()} />
+            <Button title="Already a user? Login" onPress={onLogin} />
 
         </SafeAreaView>
     );
