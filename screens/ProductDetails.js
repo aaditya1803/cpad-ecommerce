@@ -1,16 +1,16 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
-  Text, 
-  Image, 
-  View, 
-  ScrollView, 
-  SafeAreaView, 
-  Button, 
+  Text,
+  Image,
+  View,
+  ScrollView,
+  SafeAreaView,
+  Button,
   StyleSheet
-  } from 'react-native';
+} from 'react-native';
 import { getProduct } from '../services/ProductsService.js';
 import { CartContext } from '../CartContext';
-export function ProductDetails({route}) {
+export function ProductDetails({ route }) {
   const { productId } = route.params;
   const [product, setProduct] = useState({});
 
@@ -35,10 +35,9 @@ export function ProductDetails({route}) {
           <Text style={styles.name}>{product.name}</Text>
           <Text style={styles.price}>$ {product.price}</Text>
           <Text style={styles.description}>{product.description}</Text>
-            <Button
+          <Button
             onPress={onAddToCart}
-            title="Add to cart"
-            / >
+            title="Add to cart" />
         </View>
       </ScrollView>
     </SafeAreaView>
