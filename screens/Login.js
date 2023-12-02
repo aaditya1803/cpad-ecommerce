@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import { SafeAreaView } from 'react-native-safe-area-context';
 // import auth from '@react-native-firebase/auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -34,7 +35,7 @@ export const Login = ({ navigation }) => {
                 name="username"
                 rules={{ required: 'Username is required' }}
             />
-            {errors.username && <Text>{errors.username.message}</Text>}
+            {/* {errors.username && <Text>{errors.username.message}</Text>} */}
             <Controller
                 control={control}
                 render={({ field }) => (
@@ -48,7 +49,7 @@ export const Login = ({ navigation }) => {
                 name="password"
                 rules={{ required: 'Password is required' }}
             />
-            {errors.password && <Text>{errors.password.message}</Text>}
+            {/* {errors.password && <Text>{errors.password.message}</Text>} */}
             <Button title="Login" onPress={handleSubmit(onSubmit)} />
         </SafeAreaView>
     );
