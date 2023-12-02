@@ -4,8 +4,8 @@ export const CartContext = createContext();
 export function CartProvider(props) {
   const [items, setItems] = useState([]);
 
-  function addItemToCart(id) {
-    const product = getProduct(id);
+  async function addItemToCart(id) {
+    const product = await getProduct(id);
     setItems((prevItems) => {
       const item = prevItems.find((item) => (item.id == id));
       if(!item) {

@@ -1,29 +1,32 @@
-const PRODUCTS = [
-    {
-        id: 100,
-        name: 'ReactProX Headset',
-        price: 350,
-        // image: require('../assets/products/headset-100.jpg'),
-        description: 'A headset combines a headphone with microphone. Headsets are made with either a single-earpiece (mono) or a double-earpiece (mono to both ears or stereo).'
-    },
-    {
-        id: 101,
-        name: 'FastLane Toy Car',
-        price: 600,
-        // image: require('../assets/products/car-101.jpg'),
-        description: 'A model car, or toy car, is a miniature representation of an automobile. Other miniature motor vehicles, such as trucks, buses, or even ATVs, etc. are often included in this general category.'
-    },
-    {
-        id: 102,
-        name: 'SweetHome Cupcake',
-        price: 2,
-        // image: require('../assets/products/cake-102.jpg'),
-        description: 'A cupcake (also British English: fairy cake; Hiberno-English: bun; Australian English: fairy cake or patty cake[1]) is a small cake designed to serve one person.'
-    }
-];
-export function getProducts() {
-    return PRODUCTS;
+import { app, db } from '../firebaseConfig.js';
+import { getFirestore, collection, getDocs, doc, getDoc } from 'firebase/firestore';
+// const app = initializeApp(firebaseConfig);
+// const db = getFirestore(app);
+
+
+// Collection name in Firestore
+const COLLECTION_NAME = 'products';
+
+export async function getProducts() {
+  const productsCollection = collection(db, COLLECTION_NAME);
+  const productsSnapshot = await getDocs(productsCollection);
+
+  const products = [];
+  productsSnapshot.forEach((doc) => {
+    products.push({ id: doc.id, ...doc.data() });
+  });
+
+  return products;
 }
-export function getProduct(id) {
-    return PRODUCTS.find((product) => (product.id == id));
+
+export async function getProduct(id) {
+console.log(id);
+  const productDocRef = doc(db, COLLECTION_NAME, String(id));
+  const productDocSnapshot = await getDoc(productDocRef);
+
+  if (productDocSnapshot.exists()) {
+    return { id: productDocSnapshot.id, ...productDocSnapshot.data() };
+  } else {
+    return null; // Product not found
+  }
 }

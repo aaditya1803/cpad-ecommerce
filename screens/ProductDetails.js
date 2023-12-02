@@ -17,8 +17,15 @@ export function ProductDetails({ route }) {
   const { addItemToCart } = useContext(CartContext);
 
   useEffect(() => {
-    setProduct(getProduct(productId));
-  });
+    // Fetch the product when productId changes
+    const fetchProduct = async () => {
+      const productData = await getProduct(productId);
+      setProduct(productData);
+    };
+
+    fetchProduct();
+  }, [productId]); // Specify productId as a dependency
+
 
   function onAddToCart() {
     addItemToCart(product.id);
@@ -26,12 +33,12 @@ export function ProductDetails({ route }) {
 
   return (
     <SafeAreaView>
-      <ScrollView>
-        <Image
-          style={styles.image}
-          source={product.image}
-        />
+      
+      <View style={styles.imageContainer}>
+          <Image style={styles.image} source={product.image} />
+        </View>
         <View style={styles.infoContainer}>
+        
           <Text style={styles.name}>{product.name}</Text>
           <Text style={styles.price}>$ {product.price}</Text>
           <Text style={styles.description}>{product.description}</Text>
@@ -39,7 +46,7 @@ export function ProductDetails({ route }) {
             onPress={onAddToCart}
             title="Add to cart" />
         </View>
-      </ScrollView>
+      
     </SafeAreaView>
   );
 }
@@ -57,9 +64,15 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginVertical: 20,
   },
+  imageContainer: {
+    alignItems: 'center',
+  },
   image: {
-    height: 300,
-    width: '100%'
+    width: '30%', // Adjust the width as needed
+    height: undefined, // This will calculate the height based on the aspect ratio
+    aspectRatio: 1, // Maintain the original aspect ratio
+    borderRadius: 8,
+    marginBottom: 16,
   },
   infoContainer: {
     padding: 16,

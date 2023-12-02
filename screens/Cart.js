@@ -31,7 +31,7 @@ function renderItem({item}) {
       contentContainerStyle={styles.itemsListContainer}
       data={items}
       renderItem={renderItem}
-      keyExtractor={(item) => item.product.id.toString()}
+      keyExtractor={(item) => String(item.product.id)}
       ListFooterComponent={Totals}
     />
   );

@@ -18,9 +18,15 @@ function renderProduct({item: product}) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setProducts(getProducts());
-  });
+    // Use an asynchronous function to fetch products and update the state
+    const fetchProducts = async () => {
+      const productsData = await getProducts();
+      setProducts(productsData);
+    };
 
+    // Call the asynchronous function
+    fetchProducts();
+  }, []);
   return (
     <FlatList
       style={styles.productsList}
