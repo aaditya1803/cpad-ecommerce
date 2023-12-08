@@ -62,6 +62,6 @@ function App() {
 const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20
-  }
+  },
 });
 export default App;
