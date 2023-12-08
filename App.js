@@ -10,6 +10,7 @@ import { CartProvider } from './CartContext.js';
 import { firebaseConfig } from './firebaseConfig';
 import { Signup } from './screens/Signup.js';
 import { Login } from './screens/Login.js';
+import { CheckoutScreen } from './screens/CheckOut.js';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -53,7 +54,12 @@ function App() {
               headerTitleStyle: styles.headerTitle,
               headerRight: () => <CartIcon navigation={navigation} />,
             })} />
-
+          <Stack.Screen name='Checkout' component={CheckoutScreen}
+            options={({ navigation }) => ({
+              title: 'Check Out',
+              headerTitleStyle: styles.headerTitle,
+              headerRight: () => <CartIcon navigation={navigation} />,
+            })} />
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>
