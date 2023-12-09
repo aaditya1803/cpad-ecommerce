@@ -19,13 +19,13 @@ jobs:
           node-version: '14'
 
       - name: Install Expo CLI
-        run: npm install -g expo-cli
+        run: npm install -g expo-cli eas-cli
 
       - name: Install dependencies
         run: npm install
 
       - name: Build APK
-        run: npx expo build:android --release-channel=main
+        run: npx eas build -p android --release-channel=main
         env:
           EXPO_CLI_TOKEN: ${{ secrets.EXPO_CLI_TOKEN }}
 
