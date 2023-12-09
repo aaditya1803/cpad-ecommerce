@@ -1,0 +1,59 @@
+name: Build and Release APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build APK
+        run: expo build:android --release-channel=main
+        env:
+          EXPO_CLI_TOKEN: ${{ secrets.EXPO_CLI_TOKEN }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release
+          path: ${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Attach APK to Release
+        id: upload_apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release
+          path: ${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk
