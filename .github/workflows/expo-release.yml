@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Build APK
-        run: expo build:android --release-channel=main
+        run: npx expo build:android --release-channel=main
         env:
           EXPO_CLI_TOKEN: ${{ secrets.EXPO_CLI_TOKEN }}
 
